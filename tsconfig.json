@@ -1,0 +1,15 @@
+{
+  "compilerOptions": {
+    "target": "ES2020",
+    "module": "CommonJS",
+    "strict": true,
+    "baseUrl": ".",
+    "paths": {
+      "@core/*": ["src/core/*"],
+      "@utils/*": ["src/utils/*"],
+      "@types/*": ["types/*"]
+    },
+    "esModuleInterop": true
+  },
+  "include": ["src", "tests", "examples", "types"]
+}
