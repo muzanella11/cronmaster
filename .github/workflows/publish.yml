@@ -2,16 +2,15 @@ name: Publish to NPM
 
 on: workflow_call
 
-permissions:
-  id-token: write # Required for OIDC
-  contents: read
-
 jobs:
-  # Build Job
-  build:
-    name: Build distribution
+  # NPM Release Job
+  release:
+    name: Publish to NPM
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
+    permissions:
+      id-token: write # Required for OIDC
+      contents: read
     steps:
       # Step 1: Checkout repository
       - name: Checkout code
@@ -36,19 +35,13 @@ jobs:
       - name: Build the project
         run: yarn build
 
-      # Step 6: Verify build output
-      - name: Verify build output
+      # Step 6: Set up NPM authentication
+      - name: Set up Yarn configuration
         run: |
-          if [ ! -d "dist" ]; then
-            echo "Build output directory 'dist' does not exist."
-            exit 1
-          fi
-          echo "Build output directory 'dist' exists."
+          echo "//registry.npmjs.org/:_authToken=${NPM_TOKEN}" >> ~/.npmrc
 
-      # Step 7: Publish to NPM
+      # Step 7: Release and Publish to NPM
       - name: Publish to NPM
-        run: |
-          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" > ~/.npmrc
-          npm publish --access public --non-interactive --no-git-tag-version --new-version ${GITHUB_REF#refs/tags/v}
+        run: npm publish --access public
         env:
-          GITHUB_REF: ${{ github.ref }}
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
