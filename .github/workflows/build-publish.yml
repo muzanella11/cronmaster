@@ -15,7 +15,7 @@ on:
 
 jobs:
   # Lint, Format, & Build Job
-  lint:
+  lint-build:
     name: Lint, Format, and Build
     uses: ./.github/workflows/lint-build.yml
 
