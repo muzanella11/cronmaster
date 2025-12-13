@@ -1,9 +1,6 @@
 name: Release Notes
 
-on:
-  push:
-    tags:
-      - "v*"
+on: workflow_call
 
 jobs:
   create-release-notes:
