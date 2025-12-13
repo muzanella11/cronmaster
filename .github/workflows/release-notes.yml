@@ -1,0 +1,32 @@
+name: Release Notes
+
+on: workflow_call
+
+jobs:
+  create-release-notes:
+    name: Process Create Release Notes
+    runs-on: ubuntu-latest
+
+    steps:
+      # Step 1: Checkout the repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # Step 2: Set up GitHub CLI to create release
+      - name: Set up GitHub CLI
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+
+      # Step 3: Create GitHub release
+      - name: Create Release on GitHub
+        id: release_tag
+        uses: actions/create-release@v1
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          tag_name: ${{ github.ref }}
+          release_name: Release ${{ github.ref }}
+          body: |
+            For stable releases, please refer to [CHANGELOG.md](https://github.com/muzanella11/cronmaster/blob/main/CHANGELOG.md) for details.
+            For pre-releases, please refer to [CHANGELOG.md](https://github.com/muzanella11/cronmaster/blob/final/CHANGELOG.md) of the `final` branch.
