@@ -16,7 +16,7 @@ on:
 jobs:
   # Lint, Format, & Build Job
   lint-build:
-    uses: .github/workflows/lint-build.yml
+    uses: ./.github/workflows/lint-build.yml
 
   # NPM Release Job
   release:
@@ -56,5 +56,5 @@ jobs:
 
   # Create Release Notes Job
   release-notes:
-    uses: .github/workflows/release-notes.yml
+    uses: ./.github/workflows/release-notes.yml
     needs: release
