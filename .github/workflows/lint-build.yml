@@ -1,0 +1,32 @@
+name: Lint and Build
+
+on: workflow_call
+
+jobs:
+  # Lint, Format, & Build Job
+  lint-build:
+    name: Lint, Format, and Build
+    runs-on: ubuntu-latest
+    steps:
+      # Step 1: Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: 20
+          cache: "yarn"
+
+      # Step 3: Install dependencies
+      - name: Install dependencies
+        run: yarn install --frozen-lockfile
+
+      # Step 4: Lint and format check
+      - name: Run Lint and Format Check
+        run: yarn lint && yarn format:check
+
+      # Step 5: Build the project
+      - name: Build the project
+        run: yarn build
