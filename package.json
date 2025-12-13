@@ -16,7 +16,7 @@
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "format:fix": "prettier --write .",
-    "prepare": "yarn lint && yarn format:check && yarn build",
+    "prepare-build": "yarn lint && yarn format:check && yarn build",
     "example": "ts-node examples/index.ts"
   },
   "devDependencies": {
