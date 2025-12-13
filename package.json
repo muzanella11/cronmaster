@@ -1,7 +1,14 @@
 {
-  "name": "cronmaster",
+  "name": "@nmcore/cronmaster",
   "version": "0.0.1-rc.1",
   "description": "Advanced cron job orchestration with rolling schedules and persistent storage",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/muzanella11/cronmaster.git"
+  },
+  "publishConfig": {
+    "access": "public"
+  },
   "main": "dist/index.js",
   "types": "types/index.d.ts",
   "files": [
@@ -9,14 +16,15 @@
     "types"
   ],
   "scripts": {
-    "build": "tsc -p tsconfig.build.json && yarn format:fix",
+    "prepare:dist": "node scripts/prepare-dist.js",
+    "prepare-build": "yarn lint && yarn format:check && yarn build",
+    "build": "tsc -p tsconfig.build.json && yarn format:fix && yarn prepare:dist",
     "test": "jest --detectOpenHandles",
     "lint": "eslint . --ext .ts",
     "lint:fix": "eslint . --ext .ts --fix",
     "format": "prettier --write .",
     "format:check": "prettier --check .",
     "format:fix": "prettier --write .",
-    "prepare-build": "yarn lint && yarn format:check && yarn build",
     "example": "ts-node examples/index.ts"
   },
   "devDependencies": {

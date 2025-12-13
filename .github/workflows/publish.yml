@@ -35,5 +35,9 @@ jobs:
       # Step 6: Release and Publish to NPM
       - name: Publish to NPM
         run: yarn publish
+        with:
+          node-version: 20
+          cache: "yarn"
+          registry-url: "https://registry.npmjs.org/"
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}

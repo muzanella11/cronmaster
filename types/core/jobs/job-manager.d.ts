@@ -1,8 +1,18 @@
-import {CronJobPayload} from "./../../../types/cron";
 export declare class JobManager {
   private jobs;
-  createJob(payload: CronJobPayload): void;
+  private cronLocks;
+  cronDescription(cronExpr: string): string;
+  createJob(
+    taskId: string,
+    cronExpr: string,
+    task: () => Promise<void>,
+    timeZone?: string,
+    runImmediately?: boolean,
+  ): void;
   startJob(id: string): void;
   stopJob(id: string): void;
-  deleteJob(id: string): void;
+  cleanup(): void;
+  showAllJobs(): void;
+  private runWithLock;
+  deleteJob(taskId: string): void;
 }
