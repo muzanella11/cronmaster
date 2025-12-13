@@ -4,7 +4,7 @@ on: workflow_call
 
 jobs:
   create-release-notes:
-    name: Create Release Notes
+    name: Process Create Release Notes
     runs-on: ubuntu-latest
 
     steps:
