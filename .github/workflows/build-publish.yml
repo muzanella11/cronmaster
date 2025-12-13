@@ -21,7 +21,7 @@ jobs:
 
   # NPM Release Job
   release:
-    name: Publish to NPM
+    name: Publish
     needs: sanitize
     uses: ./.github/workflows/publish.yml
 
