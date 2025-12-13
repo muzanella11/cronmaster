@@ -14,6 +14,10 @@ on:
       - develop
       - final
 
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
+
 jobs:
   # Sanitize Job
   sanitize:
