@@ -14,15 +14,15 @@ on:
       - develop
 
 jobs:
-  # Lint, Format, & Build Job
-  lint-build:
-    name: Lint, Format, and Build
-    uses: ./.github/workflows/lint-build.yml
+  # Sanitize Job
+  sanitize:
+    name: Sanitize
+    uses: ./.github/workflows/sanitize.yml
 
   # NPM Release Job
   release:
-    name: Release and Publish to NPM
-    needs: lint-build
+    name: Publish to NPM
+    needs: sanitize
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
