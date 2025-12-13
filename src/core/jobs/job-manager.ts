@@ -74,6 +74,7 @@ export class JobManager {
     const jobEntries = Array.from(this.jobs.entries())
       .map(([id, job]) => {
         const cronExpr = job.cronTime?.source?.toString() || "N/A";
+        // @ts-ignore
         const timeZone = (job.cronTime as any)?._timezone || "UTC";
         const nextRun = job.nextDate() ? moment(job.nextDate()).tz(timeZone).format("YYYY-MM-DD HH:mm:ss z") : "N/A";
         return {
