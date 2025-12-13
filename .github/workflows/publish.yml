@@ -1,4 +1,4 @@
-name: Build and Publish
+name: Publish to NPM
 
 on: workflow_call
 
@@ -6,7 +6,6 @@ jobs:
   # NPM Release Job
   release:
     name: Publish to NPM
-    needs: sanitize
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
     steps:
