@@ -86,3 +86,13 @@ jobs:
         run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+
+      # Read artifact npm-debug.log if publish fails
+      - name: Read npm-debug.log on failure
+        if: failure()
+        run: |
+          if [ -f "/home/runner/.npm/_logs/"*"-debug-"*.log ]; then
+            cat /home/runner/.npm/_logs/*-debug-*.log
+          else
+            echo "No npm debug logs found."
+          fi
