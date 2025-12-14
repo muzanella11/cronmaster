@@ -62,11 +62,11 @@ jobs:
           fi
 
       # Check NPM whoami
-      - name: Check NPM whoami
-        run: npm whoami
+      # - name: Check NPM whoami
+      #   run: npm whoami
 
       # Publish to NPM
-      # - name: Publish to NPM
-      #   run: npm publish
-      #   env:
-      #     NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      - name: Publish to NPM
+        run: npm publish --provenance --access public
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
