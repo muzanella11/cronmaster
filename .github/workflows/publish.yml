@@ -63,9 +63,9 @@ jobs:
       #   run: npm whoami
 
       # NPM Add User
-      - name: NPM Add User
-        run: |
-          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+      # - name: NPM Add User
+      #   run: |
+      #     echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
 
       - name: Set up NPM auth token
         run: |
