@@ -19,7 +19,6 @@ jobs:
           node-version: 20
           registry-url: "https://npm.pkg.github.com"
           # Defaults to the user or organization that owns the workflow file
-          scope: "@nmcore"
 
       # # Check secrets NODE_AUTH_TOKEN is available
       # - name: Check NODE_AUTH_TOKEN secret
