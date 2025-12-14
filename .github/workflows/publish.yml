@@ -16,7 +16,7 @@ jobs:
     steps:
       - uses: actions/checkout@v5
       # Setup .npmrc file to publish to GitHub Packages
-      - uses: actions/setup-node@v4
+      - uses: actions/setup-node@v5
         with:
           node-version: 20
           registry-url: "https://registry.npmjs.org"
@@ -64,6 +64,8 @@ jobs:
       # Check NPM whoami
       # - name: Check NPM whoami
       #   run: npm whoami
+
+      - run: npm ci
 
       # Publish to NPM
       - name: Publish to NPM
