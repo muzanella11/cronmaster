@@ -22,6 +22,18 @@ jobs:
           # Defaults to the user or organization that owns the workflow file
           scope: "@nmcore"
 
+      # Check secrets NPM TOKEN is available
+      - name: Check NPM_TOKEN secret
+        run: |
+          if [ -z "${{ secrets.NPM_TOKEN }}" ]; then
+            echo "Error: NPM_TOKEN secret is not set."
+            exit 1
+          fi
+
+      - name: Set up NPM auth token
+        run: |
+          echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
+
       # - run: npm ci
 
       # Install NPM dependencies
