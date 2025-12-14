@@ -17,6 +17,9 @@ on:
 # permissions:
 #   id-token: write # Required for OIDC
 #   contents: read
+permissions:
+  contents: read
+  packages: write
 
 jobs:
   # Sanitize Job
