@@ -21,7 +21,25 @@ jobs:
           registry-url: "https://registry.npmjs.org"
           # Defaults to the user or organization that owns the workflow file
           scope: "@nmcore"
-      - run: npm ci
+
+      # - run: npm ci
+
+      # Install NPM dependencies
+      - name: Install dependencies
+        run: npm install
+
+      # Build the project
+      - name: Build the project
+        run: npm run build
+
+      # Verify dist folder exists
+      - name: Verify dist folder
+        run: |
+          if [ ! -d "dist" ]; then
+            echo "Error: dist folder does not exist. Build the project before publishing."
+            exit 1
+          fi
+
       - run: npm publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
