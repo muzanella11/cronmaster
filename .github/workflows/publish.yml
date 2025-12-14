@@ -39,6 +39,7 @@ jobs:
       # Step 6: Set up NPM authentication
       - name: Set up NPM authentication
         run: |
+          echo "Check NPM Token :: ${{ secrets.NPM_TOKEN }}"
           echo "//registry.npmjs.org/:_authToken=${{ secrets.NPM_TOKEN }}" >> ~/.npmrc
 
       - name: Verify NPM Authentication
