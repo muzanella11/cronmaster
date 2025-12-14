@@ -2,9 +2,9 @@ name: Publish to NPM
 
 on: workflow_call
 
-# permissions:
-#   id-token: write # Required for OIDC
-#   contents: read
+permissions:
+  id-token: write # Required for OIDC
+  contents: read
 
 jobs:
   # NPM Release Job
@@ -12,9 +12,6 @@ jobs:
     name: Publish to NPM
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
       - uses: actions/checkout@v5
       # Setup .npmrc file to publish to GitHub Packages
