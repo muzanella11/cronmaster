@@ -23,7 +23,6 @@ jobs:
         with:
           node-version: 20
           cache: "yarn"
-          registry-url: "https://registry.npmjs.org/"
 
       # Step 3: Install dependencies
       - name: Install dependencies
