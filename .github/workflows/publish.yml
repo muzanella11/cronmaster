@@ -33,7 +33,11 @@ jobs:
 
       - name: Set up NPM auth token
         run: |
-          echo "//registry.npmjs.org/:_authToken="$NODE_AUTH_TOKEN"" >> ~/.npmrc
+          cat >> ~/.npmrc <<EOF
+          //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
+          registry=https://registry.npmjs.org/
+          always-auth=true
+          EOF
 
       # Read .npmrc file for debugging
       - name: Read .npmrc file
@@ -57,8 +61,12 @@ jobs:
             exit 1
           fi
 
+      # Check NPM whoami
+      - name: Check NPM whoami
+        run: npm whoami
+
       # Publish to NPM
-      - name: Publish to NPM
-        run: npm publish
-        env:
-          NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
+      # - name: Publish to NPM
+      #   run: npm publish
+      #   env:
+      #     NODE_AUTH_TOKEN: ${{ secrets.NODE_AUTH_TOKEN }}
