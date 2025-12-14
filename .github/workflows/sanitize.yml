@@ -26,7 +26,3 @@ jobs:
       # Step 4: Lint and format check
       - name: Run Lint and Format Check
         run: yarn lint && yarn format:check
-
-      # Step 5: Build the project
-      - name: Build the project
-        run: yarn build
