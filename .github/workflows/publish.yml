@@ -2,16 +2,15 @@ name: Publish to NPM
 
 on: workflow_call
 
-permissions:
-  contents: read
-  packages: write
-
 jobs:
   # NPM Release Job
   release:
     name: Publish to NPM
     # if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      packages: write
     steps:
       - uses: actions/checkout@v5
       # Setup .npmrc file to publish to GitHub Packages
@@ -62,6 +61,23 @@ jobs:
       # Check NPM whoami
       # - name: Check NPM whoami
       #   run: npm whoami
+
+      # NPM Add User
+      - name: NPM Add User
+        run: |
+          echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
+
+      - name: Set up NPM auth token
+        run: |
+          cat >> ~/.npmrc <<EOF
+          //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
+          registry=https://npm.pkg.github.com/
+          always-auth=true
+          EOF
+
+      # Read .npmrc file for debugging
+      - name: Read .npmrc file
+        run: cat ~/.npmrc
 
       - run: npm ci
 
