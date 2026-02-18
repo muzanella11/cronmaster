@@ -21,7 +21,7 @@ jobs:
           cache: "yarn"
           registry-url: "https://registry.npmjs.org/"
           always-auth: true
-          scope: '@nmcore'
+          scope: "@nmcore"
 
       # Step 3: Install dependencies
       - name: Install dependencies
