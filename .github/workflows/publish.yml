@@ -2,10 +2,6 @@ name: Publish to NPM
 
 on: workflow_call
 
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   # NPM Release Job
   release:
