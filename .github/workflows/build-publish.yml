@@ -18,10 +18,6 @@ on:
 #   id-token: write # Required for OIDC
 #   contents: read
 
-permissions:
-  contents: read
-  id-token: write
-
 jobs:
   # Sanitize Job
   sanitize:
