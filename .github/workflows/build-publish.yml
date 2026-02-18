@@ -5,14 +5,13 @@ on:
     branches:
       - main
       - develop
-      - final
+
     tags:
       - v*
   pull_request:
     branches:
       - main
       - develop
-      - final
 
 # permissions:
 #   id-token: write # Required for OIDC
