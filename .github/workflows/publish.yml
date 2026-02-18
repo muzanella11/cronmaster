@@ -6,93 +6,35 @@ jobs:
   # NPM Release Job
   release:
     name: Publish to NPM
-    # if: startsWith(github.ref, 'refs/tags/v')
+    if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
-    permissions:
-      contents: read
-      packages: write
     steps:
-      - uses: actions/checkout@v5
-      # Setup .npmrc file to publish to GitHub Packages
-      - uses: actions/setup-node@v5
+      # Step 1: Checkout repository
+      - name: Checkout code
+        uses: actions/checkout@v3
+
+      # Step 2: Set up Node.js
+      - name: Set up Node.js
+        uses: actions/setup-node@v3
         with:
           node-version: 20
-          registry-url: "https://npm.pkg.github.com"
-          # Defaults to the user or organization that owns the workflow file
+          cache: "yarn"
+          registry-url: "https://registry.npmjs.org/"
 
-      # # Check secrets NODE_AUTH_TOKEN is available
-      # - name: Check NODE_AUTH_TOKEN secret
-      #   run: |
-      #     if [ -z "$NODE_AUTH_TOKEN" ]; then
-      #       echo "Error: NODE_AUTH_TOKEN secret is not set."
-      #       exit 1
-      #     fi
-
-      # - name: Set up NPM auth token
-      #   run: |
-      #     cat >> ~/.npmrc <<EOF
-      #     //registry.npmjs.org/:_authToken=${NODE_AUTH_TOKEN}
-      #     registry=https://registry.npmjs.org/
-      #     always-auth=true
-      #     EOF
-
-      # # Read .npmrc file for debugging
-      # - name: Read .npmrc file
-      #   run: cat ~/.npmrc
-
-      # - run: npm ci
-
-      # Install NPM dependencies
+      # Step 3: Install dependencies
       - name: Install dependencies
-        run: npm install
+        run: yarn install --frozen-lockfile
 
-      # Build the project
+      # Step 4: Lint and Format Check
+      - name: Lint and Format Check
+        run: yarn lint && yarn format:check
+
+      # Step 5: Build the Project
       - name: Build the project
-        run: npm run build
+        run: yarn build
 
-      # Verify dist folder exists
-      - name: Verify dist folder
-        run: |
-          if [ ! -d "dist" ]; then
-            echo "Error: dist folder does not exist. Build the project before publishing."
-            exit 1
-          fi
-
-      # Check NPM whoami
-      # - name: Check NPM whoami
-      #   run: npm whoami
-
-      # NPM Add User
-      # - name: NPM Add User
-      #   run: |
-      #     echo "//npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}" > ~/.npmrc
-
-      - name: Set up NPM auth token
-        run: |
-          cat >> ~/.npmrc <<EOF
-          //npm.pkg.github.com/:_authToken=${NODE_AUTH_TOKEN}
-          registry=https://npm.pkg.github.com/
-          always-auth=true
-          EOF
-
-      # Read .npmrc file for debugging
-      - name: Read .npmrc file
-        run: cat ~/.npmrc
-
-      - run: npm ci
-
-      # Publish to NPM
+      # Step 6: Release and Publish to NPM
       - name: Publish to NPM
-        run: npm publish
+        run: yarn publish --access public --non-interactive
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
-
-      # Read artifact npm-debug.log if publish fails
-      - name: Read npm-debug.log on failure
-        if: failure()
-        run: |
-          if [ -f "/home/runner/.npm/_logs/"*"-debug-"*.log ]; then
-            cat /home/runner/.npm/_logs/*-debug-*.log
-          else
-            echo "No npm debug logs found."
-          fi
