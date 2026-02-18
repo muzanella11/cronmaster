@@ -8,6 +8,9 @@ jobs:
     name: Publish to NPM
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       # Step 1: Checkout repository
       - name: Checkout code
