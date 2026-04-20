@@ -8,17 +8,22 @@ jobs:
     name: Publish to NPM
     if: startsWith(github.ref, 'refs/tags/v')
     runs-on: ubuntu-latest
+    permissions:
+      contents: read
+      id-token: write
     steps:
       # Step 1: Checkout repository
       - name: Checkout code
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       # Step 2: Set up Node.js
       - name: Set up Node.js
-        uses: actions/setup-node@v3
+        uses: actions/setup-node@v4
         with:
           node-version: 20
           cache: "yarn"
+          registry-url: "https://registry.npmjs.org/"
+          scope: "@nmcore"
 
       # Step 3: Install dependencies
       - name: Install dependencies
@@ -34,6 +39,6 @@ jobs:
 
       # Step 6: Release and Publish to NPM
       - name: Publish to NPM
-        run: yarn publish
         env:
           NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
+        run: npm publish --provenance --access public

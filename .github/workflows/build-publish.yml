@@ -12,22 +12,24 @@ on:
     branches:
       - main
       - develop
-      - final
 
 jobs:
-  # Sanitize Job
+  # Sanitize Job - always runs on every push and PR
   sanitize:
     name: Sanitize
     uses: ./.github/workflows/sanitize.yml
 
-  # NPM Release Job
+  # NPM Release Job - only runs on tag push
   release:
     name: Publish
+    if: startsWith(github.ref, 'refs/tags/v')
     needs: sanitize
     uses: ./.github/workflows/publish.yml
+    secrets: inherit
 
-  # Create Release Notes Job
+  # Create Release Notes Job - only runs on tag push
   release-notes:
     name: Release Notes
-    uses: ./.github/workflows/release-notes.yml
+    if: startsWith(github.ref, 'refs/tags/v')
     needs: release
+    uses: ./.github/workflows/release-notes.yml
