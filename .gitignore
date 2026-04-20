@@ -40,3 +40,10 @@ jest-cache/
 # Examples ignore
 examples/*.js
 examples/*.map
+
+# AI tooling - local/credentials (never commit)
+.claude/config.local.yaml
+.claude/settings.local.json
+.gemini/config.local.yaml
+.codex/config.local.yaml
+.claude/skills/
