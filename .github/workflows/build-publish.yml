@@ -5,7 +5,7 @@ on:
     branches:
       - main
       - develop
-
+      - final
     tags:
       - v*
   pull_request:
@@ -13,25 +13,22 @@ on:
       - main
       - develop
 
-# permissions:
-#   id-token: write # Required for OIDC
-#   contents: read
-
 jobs:
-  # Sanitize Job
+  # Sanitize Job - always runs on every push and PR
   sanitize:
     name: Sanitize
     uses: ./.github/workflows/sanitize.yml
 
-  # NPM Release Job
+  # NPM Release Job - only runs on tag push
   release:
     name: Publish
+    if: startsWith(github.ref, 'refs/tags/v')
     needs: sanitize
     uses: ./.github/workflows/publish.yml
 
-  # Create Release Notes Job
+  # Create Release Notes Job - only runs on tag push
   release-notes:
     name: Release Notes
     if: startsWith(github.ref, 'refs/tags/v')
-    uses: ./.github/workflows/release-notes.yml
     needs: release
+    uses: ./.github/workflows/release-notes.yml
